@@ -22,12 +22,12 @@ module.exports = {
         exclude: /node_modules/,
         options: {
           presets: [
-            'react', 
+            'react',
             'stage-0',
-            ['env', { targets: { browsers: ['last 2 versions'] }} ]
-          ]
-        }
-      }
-    ]
-  }
+            ['env', { targets: { browsers: ['last 2 versions'] } }],
+          ],
+        },
+      },
+    ],
+  },
 };
