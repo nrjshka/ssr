@@ -1,6 +1,6 @@
 const path = require('path');
 
-modules.exports = {
+module.exports = {
   // Inform webpack that we are building bundle.js for NodeJs, rather than for the browser
   target: 'node',
 
@@ -14,7 +14,7 @@ modules.exports = {
   },
 
   // Tell babel to run all files it runs through
-  modules: {
+  module: {
     rules: [
       {
         test: /\.js?$/,
