@@ -2,7 +2,12 @@ import React from 'react';
 
 const Home = () => (
   <div>
-    Test
+    <div>
+      Test
+    </div>
+    <button onClick={() => console.log('Hi, there!')}>
+      Click me!
+    </button>
   </div>
 );
 
