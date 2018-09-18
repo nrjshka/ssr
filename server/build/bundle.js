@@ -88,6 +88,8 @@ module.exports = require("redux");
 "use strict";
 
 
+__webpack_require__(17);
+
 var _express = __webpack_require__(4);
 
 var _express2 = _interopRequireDefault(_express);
@@ -197,13 +199,18 @@ var _Home = __webpack_require__(9);
 
 var _Home2 = _interopRequireDefault(_Home);
 
+var _UsersContainer = __webpack_require__(18);
+
+var _UsersContainer2 = _interopRequireDefault(_UsersContainer);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = function () {
   return _react2.default.createElement(
     'div',
     null,
-    _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _Home2.default })
+    _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _Home2.default }),
+    _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/users', component: _UsersContainer2.default })
   );
 };
 
@@ -262,6 +269,8 @@ var _reduxThunk = __webpack_require__(11);
 
 var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
+var _reduxDevtoolsExtension = __webpack_require__(16);
+
 var _reducers = __webpack_require__(12);
 
 var _reducers2 = _interopRequireDefault(_reducers);
@@ -269,7 +278,7 @@ var _reducers2 = _interopRequireDefault(_reducers);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = function () {
-  var store = (0, _redux.createStore)(_reducers2.default, {}, (0, _redux.applyMiddleware)(_reduxThunk2.default));
+  var store = (0, _redux.createStore)(_reducers2.default, {}, (0, _reduxDevtoolsExtension.composeWithDevTools)((0, _redux.applyMiddleware)(_reduxThunk2.default)));
 
   return store;
 };
@@ -322,7 +331,7 @@ exports.default = function () {
 
   switch (action.type) {
     case _actions.FETCH_USERS:
-      return action.payload.data;
+      return action.data;
     default:
       return state;
   }
@@ -355,7 +364,7 @@ var fetchUsers = exports.fetchUsers = function fetchUsers() {
               }).then(function (data) {
                 return dispatch({
                   type: FETCH_USERS,
-                  payload: data
+                  data: data
                 });
               });
 
@@ -372,6 +381,175 @@ var fetchUsers = exports.fetchUsers = function fetchUsers() {
     };
   }();
 };
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var UsersList = function (_Component) {
+  _inherits(UsersList, _Component);
+
+  function UsersList() {
+    _classCallCheck(this, UsersList);
+
+    return _possibleConstructorReturn(this, (UsersList.__proto__ || Object.getPrototypeOf(UsersList)).apply(this, arguments));
+  }
+
+  _createClass(UsersList, [{
+    key: 'renderUsers',
+    value: function renderUsers() {
+      return this.props.users.map(function (user) {
+        return _react2.default.createElement(
+          'li',
+          { key: 'user-' + user.id },
+          ' ',
+          user.name
+        );
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        'List of users:',
+        _react2.default.createElement(
+          'ul',
+          null,
+          this.renderUsers()
+        )
+      );
+    }
+  }]);
+
+  return UsersList;
+}(_react.Component);
+
+;
+
+exports.default = UsersList;
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var compose = __webpack_require__(2).compose;
+
+exports.__esModule = true;
+exports.composeWithDevTools = (
+  typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ :
+    function() {
+      if (arguments.length === 0) return undefined;
+      if (typeof arguments[0] === 'object') return compose;
+      return compose.apply(null, arguments);
+    }
+);
+
+exports.devToolsEnhancer = (
+  typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION__ ?
+    window.__REDUX_DEVTOOLS_EXTENSION__ :
+    function() { return function(noop) { return noop; } }
+);
+
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports) {
+
+module.exports = require("babel-polyfill");
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(7);
+
+var _actions = __webpack_require__(14);
+
+var _Users = __webpack_require__(15);
+
+var _Users2 = _interopRequireDefault(_Users);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var UsersList = function (_Component) {
+  _inherits(UsersList, _Component);
+
+  function UsersList() {
+    _classCallCheck(this, UsersList);
+
+    return _possibleConstructorReturn(this, (UsersList.__proto__ || Object.getPrototypeOf(UsersList)).apply(this, arguments));
+  }
+
+  _createClass(UsersList, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.props.fetchUsers();
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(_Users2.default, this.props);
+    }
+  }]);
+
+  return UsersList;
+}(_react.Component);
+
+;
+
+var mapStateToProps = function mapStateToProps(_ref) {
+  var _ref$users = _ref.users,
+      users = _ref$users === undefined ? [] : _ref$users;
+  return { users: users };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, { fetchUsers: _actions.fetchUsers })(UsersList);
 
 /***/ })
 /******/ ]);

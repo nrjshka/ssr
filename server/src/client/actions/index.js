@@ -4,6 +4,6 @@ export const fetchUsers = () => async (dispatch) => {
     .then(data => data.json())
     .then(data => dispatch({
       type: FETCH_USERS,
-      payload: data,
+      data,
     }));
 };
